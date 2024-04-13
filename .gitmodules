@@ -1,0 +1,21 @@
+[submodule "lib/Adafruit_Sensor"]
+	path = lib/Adafruit_Sensor
+	url = git@github.com:BBCRobo/Adafruit_Sensor.git
+[submodule "lib/Adafruit_VL53L1X"]
+	path = lib/Adafruit_VL53L1X
+	url = git@github.com:BBCRobo/Adafruit_VL53L1X.git
+[submodule "lib/Dynamixel2Arduino"]
+	path = lib/Dynamixel2Arduino
+	url = git@github.com:BBCRobo/Dynamixel2Arduino.git
+[submodule "lib/Adafruit_BNO055"]
+	path = lib/Adafruit_BNO055
+	url = git@github.com:BBCRobo/Adafruit_BNO055.git
+[submodule "lib/SparkFun_I2C_Mux_Arduino_Library"]
+	path = lib/SparkFun_I2C_Mux_Arduino_Library
+	url = git@github.com:BBCRobo/SparkFun_I2C_Mux_Arduino_Library.git
+[submodule "lib/Adafruit-MLX90614-Library"]
+	path = lib/Adafruit-MLX90614-Library
+	url = git@github.com:BBCRobo/Adafruit-MLX90614-Library.git
+[submodule "lib/Adafruit_BusIO"]
+	path = lib/Adafruit_BusIO
+	url = git@github.com:BBCRobo/Adafruit_BusIO.git

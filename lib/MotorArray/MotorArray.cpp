@@ -3,10 +3,10 @@
 MotorArray::MotorArray(HardwareSerial& port, int dir_pin) {
     dxl = Dynamixel2Arduino(port, dir_pin);
 
-    backLeft = Motor(1, true, &dxl);
-    //backRight = Motor(BR_ID, BR_REVERSED, &dxl);
-    //frontLeft = Motor(FL_ID, FL_REVERSED, &dxl);
-    //frontRight = Motor(FR_ID, FR_REVERSED, &dxl);
+    backLeft = Motor(BL_ID, BL_REVERSED, &dxl);
+    backRight = Motor(BR_ID, BR_REVERSED, &dxl);
+    frontLeft = Motor(FL_ID, FL_REVERSED, &dxl);
+    frontRight = Motor(FR_ID, FR_REVERSED, &dxl);
 }
 
 void MotorArray::init() {

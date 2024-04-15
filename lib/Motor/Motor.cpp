@@ -8,6 +8,7 @@ Motor::Motor(uint8_t id, bool isReversed, Dynamixel2Arduino* motor) {
 
 void Motor::init() {
     if(motor->ping(id)) {motor->ledOn(id);}
+    else {Serial.printf("init id%d failed\n", id);}
     motor->torqueOff(id);
     motor->setOperatingMode(id, OP_VELOCITY);
     motor->writeControlTableItem(ControlTableItem::VELOCITY_LIMIT, id, DXL_MAX_VELOCITY);

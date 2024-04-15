@@ -9,12 +9,11 @@ MotorArray legs(DXL_SERIAL, DXL_DIR_PIN);
 
 void setup() {
 	Serial.begin(9600);
-	
-	delay(6000);
+
 	Serial.println("starting");
 
 	legs.init();
-	legs.setTargetVelocityRaw(1023, -1023);
+	legs.setTargetVelocityRaw(-1023, -1023);
 }
 
 void loop() {

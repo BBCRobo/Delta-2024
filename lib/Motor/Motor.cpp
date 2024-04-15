@@ -17,7 +17,7 @@ void Motor::init() {
 }
 
 void Motor::setTargetVelocityRaw(int16_t velocity) {
-    motor->setGoalVelocity(id, velocity, UNIT_RAW);
+    motor->setGoalVelocity(id, velocity * isReversed, UNIT_RAW);
 }
 
 int16_t Motor::getCurrentVelocityRaw() {

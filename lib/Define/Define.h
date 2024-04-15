@@ -16,13 +16,13 @@
 #define FL_ID 3
 #define FL_REVERSED false
 
-#define BL_ID 1
+#define BL_ID 2
 #define BL_REVERSED false
 
-#define BR_ID 4
+#define BR_ID 1
 #define BR_REVERSED true
 
-#define FR_ID 2
+#define FR_ID 4
 #define FR_REVERSED true
 
 // ---------- IMU ---------- //

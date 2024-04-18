@@ -19,6 +19,9 @@ void MotorArray::init() {
 }
 
 void MotorArray::setTargetVelocityRaw(int16_t left, int16_t right) {
+    // Ensure left and right don't exceed max/min vel.
+    left = (left > DXL_MAX_VELOCITY ? DXL_MAX_VELOCITY : (left < -DXL_MAX_VELOCITY ? -DXL_MAX_VELOCITY : left));
+    right = (right > DXL_MAX_VELOCITY ? DXL_MAX_VELOCITY : (right < -DXL_MAX_VELOCITY ? -DXL_MAX_VELOCITY : right));
     frontLeft.setTargetVelocityRaw(left);
     frontRight.setTargetVelocityRaw(right);
     backLeft.setTargetVelocityRaw(left);

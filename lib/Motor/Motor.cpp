@@ -21,5 +21,7 @@ void Motor::setTargetVelocityRaw(int16_t velocity) {
 }
 
 int16_t Motor::getCurrentVelocityRaw() {
-    return motor->getPresentVelocity(id, UNIT_RAW);
+    int16_t currVel = motor->getPresentVelocity(id, UNIT_RAW) * isReversed;
+    //Serial.printf("id:%d Val: %d\n", id, currVel);
+    return currVel;
 }

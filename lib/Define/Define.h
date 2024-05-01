@@ -30,8 +30,6 @@
 #define FR_ID 4
 #define FR_REVERSED true
 
-#define WHEEL_VEL_SCALE_FACTOR 100.0f
-
 // ---------- IMU ---------- //
 
 #define BNO_DEFAULT 55
@@ -40,4 +38,10 @@
 
 #define ORIENT_SCALE_FACTOR 100.0f
 
+// ---------- LattePanda ---------- //
+
+#define LATTE_SERIAL Serial1
+#define LATTE_BAUD 115200
+
 #endif // DEFINE_H_
+

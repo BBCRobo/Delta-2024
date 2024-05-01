@@ -1,24 +1,24 @@
 #include "IMU.h"
 
 void IMU::init() {
-    compass.begin();
-    compass.setExtCrystalUse(true);
+    bno.begin();
+    bno.setExtCrystalUse(true);
 }
 
-void IMU::getOrientationData(imu::Vector<3>& orientation) {
-    orient = compass.getVector(Adafruit_BNO055::VECTOR_EULER);
+void IMU::getOrientation(imu::Vector<3>& orientation) {
+    auto orient = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
     // Deadband filter
     orientation = orient;
 }
 
 void IMU::getAngAccel(imu::Vector<3>& acceleration) {
-    accel = compass.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+    auto accel = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
     // Deadband filter
-    acceleration = accel
+    acceleration = accel;
 }
 
 void IMU::getAngVel(imu::Vector<3>& velocity) {
-    vel = compass.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+    auto vel = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
     // Deadband filter
     velocity = vel;
 }

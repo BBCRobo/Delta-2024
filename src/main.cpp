@@ -7,20 +7,20 @@
 #include <IMU.h>
 
 MotorArray legs(DXL_SERIAL, DXL_DIR_PIN);
-IMU comp();
+IMU compass = IMU();
 
 void setup() {
     Serial.begin(9600);
 
     legs.init();
-    comp.init();
+    compass.init();
 }
 
 void loop() {
     imu::Vector<3> orient, accel, vel;
-    comp.getOrientation(orient);
-    comp.getAngAccel(accel);
-    comp.getAngVel(vel);
+    compass.getOrientation(orient);
+    compass.getAngAccel(accel);
+    compass.getAngVel(vel);
     Serial.printf("X:%f\tY:%f\tZ:%f\tVelX:%f\tVelY:%f\tVelZ:%f\n", orient.x(), orient.y(), orient.z(),
     		vel.x(), vel.y(), vel.z());
     Serial.printf("AccelX:%f\tAccelY:%f\tAccelZ:%f\n", accel.x(), accel.y(), accel.z());

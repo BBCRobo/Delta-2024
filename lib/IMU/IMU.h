@@ -17,7 +17,7 @@ public:
 
     void getDeadBand();
 private:
-    Adafruit_BNO055 compass = Adafruit_BNO055(BNO_DEFAULT, BNO_ADDR, &BNO_PORT);
+    Adafruit_BNO055 bno = Adafruit_BNO055(BNO_DEFAULT, BNO_ADDR, &BNO_PORT);
 
 };
 

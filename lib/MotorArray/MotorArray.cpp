@@ -28,7 +28,8 @@ void MotorArray::setTargetVelocityRaw(int16_t left, int16_t right) {
     backRight.setTargetVelocityRaw(right);
 }
 
-void MotorArray::getCurrentVelocityRaw(int16_t& left_vel, int16_t& right_vel) {
-    left_vel = static_cast<int16_t>((frontLeft.getCurrentVelocityRaw() + backLeft.getCurrentVelocityRaw())/2);
-    right_vel = static_cast<int16_t>((frontRight.getCurrentVelocityRaw() + backRight.getCurrentVelocityRaw())/2);
+std::array<float, 2> MotorArray::getCurrentVelocityRaw() {
+    float left_vel = static_cast<float>((frontLeft.getCurrentVelocityRaw() + backLeft.getCurrentVelocityRaw())/2);
+    float right_vel = static_cast<float>((frontRight.getCurrentVelocityRaw() + backRight.getCurrentVelocityRaw())/2);
+    return {left_vel, right_vel};
 }

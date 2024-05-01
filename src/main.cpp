@@ -17,11 +17,13 @@ void setup() {
 }
 
 void loop() {
-    imu::Vector<3> orient, accel, vel;
+    imu::Vector<3> orient;
     compass.getOrientation(orient);
-    compass.getAngAccel(accel);
-    compass.getAngVel(vel);
-    Serial.printf("X:%f\tY:%f\tZ:%f\tVelX:%f\tVelY:%f\tVelZ:%f\n", orient.x(), orient.y(), orient.z(),
-    		vel.x(), vel.y(), vel.z());
-    Serial.printf("AccelX:%f\tAccelY:%f\tAccelZ:%f\n", accel.x(), accel.y(), accel.z());
+    Serial.printf("X:%f\tY:%f\tZ:%f\n", orient.x(), orient.y(), orient.z());
+
+    std::vector<byte> message = convertData2Bytes(orient, legs.getCurrentVelocityRaw());
+    for (const auto& byte: message) {
+	    Serial.printf("%02x\t",byte);
+    }
+    Serial.println();
 }

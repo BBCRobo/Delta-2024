@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Define.h>
 #include <Motor.h>
+#include <array>
 
 class MotorArray {
 public:
@@ -11,7 +12,7 @@ public:
 
     void init();
     void setTargetVelocityRaw(int16_t left, int16_t right);
-    void getCurrentVelocityRaw(int16_t& left_vel, int16_t& right_vel);
+    std::array<float, 2> getCurrentVelocityRaw();
 
 private:
     Motor backLeft;

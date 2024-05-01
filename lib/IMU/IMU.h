@@ -5,17 +5,18 @@
 #include <Adafruit_BNO055.h>
 #include <Define.h>
 
+#include <vector>
+
 class IMU {
 public:
     IMU() {};
 
     void init();
+    std::vector<byte> convertData2Bytes();
+private:
+    imu::Vector<3> getOrientVector() {return bno.getVector(Adafruit_BNO055::VECTOR_EULER);}
 
-    void getOrientation(imu::Vector<3>& orientation);
-    void getAngAccel(imu::Vector<3>& acceleration);
-    void getAngVel(imu::Vector<3>& velocity);
 
-    void getDeadBand();
 private:
     Adafruit_BNO055 bno = Adafruit_BNO055(BNO_DEFAULT, BNO_ADDR, &BNO_PORT);
 

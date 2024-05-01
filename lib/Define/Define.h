@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <imumaths.h>
-#include <array>
 
 // ---------- Motors ---------- //
 
@@ -40,37 +39,5 @@
 #define BNO_PORT Wire
 
 #define ORIENT_SCALE_FACTOR 100.0f
-
-// ---------- Functions ---------- //
-
-// Not very scalable ik but good enough
-inline std::vector<byte> convertData2Bytes(const imu::Vector<3>& orient, const std::array<float, 2>& wheel_vel) {
-    std::vector<byte> messageArray;
-    
-    // Static casting data to uint16_t
-    uint16_t orient_x_scaled = static_cast<uint16_t>(orient.x() * ORIENT_SCALE_FACTOR);
-    uint16_t orient_y_scaled = static_cast<uint16_t>((orient.y() + 180.0f) * ORIENT_SCALE_FACTOR);
-    uint16_t orient_z_scaled = static_cast<uint16_t>((orient.z() + 180.0f) * ORIENT_SCALE_FACTOR);
-    uint16_t left_vel = static_cast<uint16_t>(wheel_vel[0] * WHEEL_VEL_SCALE_FACTOR);
-    uint16_t right_vel = static_cast<uint16_t>(wheel_vel[1] * WHEEL_VEL_SCALE_FACTOR);
-
-    // Bit shifting and appending to message
-    messageArray.push_back(orient_x_scaled & 0xFF);
-    messageArray.push_back((orient_x_scaled >> 8) & 0xFF);
-
-    messageArray.push_back(orient_y_scaled & 0xFF);
-    messageArray.push_back((orient_y_scaled >> 8) & 0xFF);
-
-    messageArray.push_back(orient_z_scaled & 0xFF);
-    messageArray.push_back((orient_z_scaled >> 8) & 0xFF);
-
-    messageArray.push_back(left_vel & 0xFF);
-    messageArray.push_back((left_vel >> 8) & 0xFF);
-
-    messageArray.push_back(right_vel & 0xFF);
-    messageArray.push_back((right_vel >> 8) & 0xFF);
-
-    return messageArray;
-}
 
 #endif // DEFINE_H_

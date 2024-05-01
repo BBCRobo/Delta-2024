@@ -18,10 +18,8 @@ void setup() {
 
 void loop() {
     imu::Vector<3> orient;
-    compass.getOrientation(orient);
-    Serial.printf("X:%f\tY:%f\tZ:%f\n", orient.x(), orient.y(), orient.z());
 
-    std::vector<byte> message = convertData2Bytes(orient, legs.getCurrentVelocityRaw());
+    std::vector<byte> message = compass.convertData2Bytes();
     for (const auto& byte: message) {
 	    Serial.printf("%02x\t",byte);
     }

@@ -13,9 +13,10 @@ public:
 
     void init();
     std::vector<byte> convertData2Bytes();
+
+    void printOrient();
 private:
     imu::Vector<3> getOrientVector() {return bno.getVector(Adafruit_BNO055::VECTOR_EULER);}
-    imu::Quaternion getQuat() {return bno.getQuat();}
 
 private:
     Adafruit_BNO055 bno = Adafruit_BNO055(BNO_DEFAULT, BNO_ADDR, &BNO_PORT);

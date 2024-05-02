@@ -5,6 +5,12 @@ void IMU::init() {
     bno.setExtCrystalUse(true);
 }
 
+void IMU::printOrient() {
+    auto orient = getOrientVector();
+
+    Serial.printf("Euler X:%f\tY:%f\tZ:%f\n", orient.x(), orient.y(), orient.z());
+}
+
 std::vector<byte> IMU::convertData2Bytes() {
     std::vector<byte> messageArray;
     

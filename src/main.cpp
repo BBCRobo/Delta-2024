@@ -20,9 +20,10 @@ void setup() {
 void loop() {
     std::vector<byte> message = compass.convertData2Bytes();
     for (const auto& byte: message) {
-	    Serial.printf("%02x\t",byte);
+	Serial.printf("%02x\t",byte);
     }
     Serial.println();
     LATTE_SERIAL.write(message.data(), message.size());
+    compass.printOrient();
     delay(500);
 }

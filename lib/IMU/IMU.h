@@ -12,7 +12,7 @@ public:
     IMU() {};
 
     void init();
-    std::vector<byte> convertData2Bytes();
+    std::vector<byte> convertOrient2Bytes();
 
     void printOrient();
 private:

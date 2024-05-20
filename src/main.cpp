@@ -18,12 +18,15 @@ void setup() {
 }
 
 void loop() {
-    std::vector<byte> message = compass.convertData2Bytes();
+    std::vector<byte> message = {TRANSMIT_FIRST_BYTE, TRANSMIT_FIRST_BYTE};
+
+    std::vector<byte> compass_data = compass.convertOrient2Bytes();
+    message.insert(message.end(), compass_data.begin(), compass_data.end());
+
     for (const auto& byte: message) {
 	Serial.printf("%02x\t",byte);
     }
     Serial.println();
     LATTE_SERIAL.write(message.data(), message.size());
     compass.printOrient();
-    delay(500);
 }

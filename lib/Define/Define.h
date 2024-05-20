@@ -43,5 +43,7 @@
 #define LATTE_SERIAL Serial1
 #define LATTE_BAUD 115200
 
+#define TRANSMIT_FIRST_BYTE 0xFF
+
 #endif // DEFINE_H_
 

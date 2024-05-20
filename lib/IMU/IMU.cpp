@@ -11,7 +11,7 @@ void IMU::printOrient() {
     Serial.printf("Euler X:%f\tY:%f\tZ:%f\n", orient.x(), orient.y(), orient.z());
 }
 
-std::vector<byte> IMU::convertData2Bytes() {
+std::vector<byte> IMU::convertOrient2Bytes() {
     std::vector<byte> messageArray;
     
     auto orient = getOrientVector();
@@ -21,7 +21,6 @@ std::vector<byte> IMU::convertData2Bytes() {
     uint16_t orient_y_scaled = static_cast<uint16_t>((orient.y() + 180.0f) * ORIENT_SCALE_FACTOR);
     uint16_t orient_z_scaled = static_cast<uint16_t>((orient.z() + 180.0f) * ORIENT_SCALE_FACTOR);
 
-    // Bit shifting and appending to message
     messageArray.push_back(orient_x_scaled & 0xFF);
     messageArray.push_back((orient_x_scaled >> 8) & 0xFF);
 

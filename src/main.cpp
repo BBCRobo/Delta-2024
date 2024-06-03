@@ -5,9 +5,11 @@
 #include <Define.h>
 #include <MotorArray.h>
 #include <IMU.h>
+#include <TEMP.h>
 
 MotorArray legs(DXL_SERIAL, DXL_DIR_PIN);
 IMU compass = IMU();
+TEMP temp = TEMP();
 
 void setup() {
     Serial.begin(9600);
@@ -15,6 +17,7 @@ void setup() {
 
     legs.init();
     compass.init();
+    temp.init();
 }
 
 void loop() {
@@ -23,10 +26,11 @@ void loop() {
     compass.printOrient();
     std::vector<byte> compass_data = compass.convertOrient2Bytes();
     message.insert(message.end(), compass_data.begin(), compass_data.end());
-
+    // temp.isheatVictim();
     //for (const auto& byte: message) {
     //	Serial.printf("%02x\t",byte);
     //}
     //Serial.println();
+    temp.read();
     LATTE_SERIAL.write(message.data(), message.size());
 }

@@ -5,6 +5,12 @@
 #include <Wire.h>
 #include <imumaths.h>
 
+typedef enum {
+    NONE = 0,
+    LEFT = 1,
+    RIGHT = 2
+} victim_type_t;
+
 // ---------- Motors ---------- //
 
 #define DXL_SERIAL Serial2
@@ -63,7 +69,12 @@
 #define TEMP_L 1
 #define TEMP_R 2
 
-#define LRF_MUX Wire1
+#define TEMP_MUX_ENABLE 10 // dummy
+
+#define TEMP_MUX Wire1
+#define MUX_ADDR 0x70
+
+#define TEMP_THRESHOLD 4.0f
 
 #endif // DEFINE_H_
 

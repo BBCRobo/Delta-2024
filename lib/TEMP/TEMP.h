@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <Define.h>
-#include <LRF.h>
 #include <SparkFun_I2C_Mux_Arduino_Library.h>
 #include <Adafruit_MLX90614.h>
 
@@ -15,7 +14,7 @@ public:
     void init();
     void read();
     
-    Direction isheatVictim(LRF* lrf);
+    victim_type_t isheatVictim();
 
 private:
     QWIICMUX TempMux;

@@ -15,6 +15,7 @@ public:
     std::vector<byte> convertOrient2Bytes();
 
     void printOrient();
+    void printQuat();
 private:
     imu::Vector<3> getOrientVector() {return bno.getVector(Adafruit_BNO055::VECTOR_EULER);}
 

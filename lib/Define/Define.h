@@ -45,5 +45,25 @@
 
 #define TRANSMIT_FIRST_BYTE 0xFF
 
+// --------- LS ---------- //
+
+#define LED_LSB 4
+
+#define LS_1 22
+#define LS_2 21
+#define LS_3 20
+
+#define LS_COUNT 3
+
+// Also need the colour detection stuff
+
+// ---------- TEMP ---------- //
+
+// Dummy
+#define TEMP_L 1
+#define TEMP_R 2
+
+#define LRF_MUX Wire1
+
 #endif // DEFINE_H_
 

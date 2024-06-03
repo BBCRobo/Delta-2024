@@ -1,7 +1,7 @@
 #include "IMU.h"
 
 void IMU::init() {
-    bno.begin();
+    bno.begin(adafruit_bno055_opmode_t::OPERATION_MODE_IMUPLUS);
     bno.setExtCrystalUse(true);
 }
 
@@ -9,6 +9,14 @@ void IMU::printOrient() {
     auto orient = getOrientVector();
 
     Serial.printf("Euler X:%f\tY:%f\tZ:%f\n", orient.x(), orient.y(), orient.z());
+}
+
+void IMU::printQuat() {
+    sensors_event_t event;
+    bno.getEvent(&event);
+    auto quat = bno.getQuat();
+
+    Serial.printf("Quat: X:%f Y:%f Z:%f W:%f\n", quat.x(), quat.y(), quat.z(), quat.w());
 }
 
 std::vector<byte> IMU::convertOrient2Bytes() {

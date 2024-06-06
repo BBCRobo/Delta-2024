@@ -19,10 +19,7 @@ void setup() {
     Serial.begin(9600);
     LATTE_SERIAL.begin(LATTE_BAUD);
 
-    delay(5000);
-
-    Wire1.begin();
-
+    MUX_PORT.begin();
     while(!master_mux.begin(MUX_ADDR, MUX_PORT)) {
         Serial.println("Mux did not begin");
     }
@@ -30,7 +27,7 @@ void setup() {
     // legs.init();
     // compass.init();
     temp.init();
-    // ls.init();
+    ls.init();
 }
 
 void loop() {
@@ -48,7 +45,7 @@ void loop() {
     //}
     //Serial.println();
     // compass.printOrient();
-    temp.read();
-    // ls.readColour();
+    // temp.read();
+    ls.readColour();
     // LATTE_SERIAL.write(message.data(), message.size());
 }

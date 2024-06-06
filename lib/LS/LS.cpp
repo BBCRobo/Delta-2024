@@ -8,7 +8,6 @@ void LS::init() {
     pinMode(LS_3, INPUT);
 
     LSMux->setPort(COLOUR_MUX_PORT);
-    delay(10);
     while(!colour.begin(10, APDS9960_AGAIN_4X, APDS9960_ADDRESS, &MUX_PORT)) {
         Serial.println("Did not begin colour sensor");
     }
@@ -25,8 +24,8 @@ void LS::readColour() {
     LSMux->setPort(COLOUR_MUX_PORT);
     if(colour.colorDataReady()) {
         colour.getColorData(&r, &g, &b, &c);
+        Serial.printf("R:%uG:%uB:%uC:%u\n", r, g, b, c);
     }
-    Serial.printf("R: %uG:%u G:%u C:%u\n");
 }
 
 bool LS::isBlackTile() {

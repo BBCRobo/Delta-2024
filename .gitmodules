@@ -19,3 +19,6 @@
 [submodule "lib/Adafruit_BusIO"]
 	path = lib/Adafruit_BusIO
 	url = git@github.com:BBCRobo/Adafruit_BusIO.git
+[submodule "lib/Adafruit_APDS9960"]
+	path = lib/Adafruit_APDS9960
+	url = git@github.com:BBCRobo/Adafruit_APDS9960.git

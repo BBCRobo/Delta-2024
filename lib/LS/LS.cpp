@@ -2,14 +2,31 @@
 
 void LS::init() {
     pinMode(LS_CONTROL, OUTPUT);
-    analogWrite(LS_CONTROL, 67);
+    analogWrite(LS_CONTROL, LS_BOARD_BRIGHTNESS);
     pinMode(LS_1, INPUT);
     pinMode(LS_2, INPUT);
     pinMode(LS_3, INPUT);
+
+    LSMux->setPort(COLOUR_MUX_PORT);
+    delay(10);
+    while(!colour.begin(10, APDS9960_AGAIN_4X, APDS9960_ADDRESS, &MUX_PORT)) {
+        Serial.println("Did not begin colour sensor");
+    }
+    colour.enableColor(true);
 }
 
-void LS::read() {
+void LS::readLight() {
     Serial.printf("1: %d 2: %d 3: %d\n", analogRead(LS_1), analogRead(LS_2), analogRead(LS_3));
+}
+
+void LS::readColour() {
+    uint16_t r, g, b, c;
+    r = g = b = c = 0;
+    LSMux->setPort(COLOUR_MUX_PORT);
+    if(colour.colorDataReady()) {
+        colour.getColorData(&r, &g, &b, &c);
+    }
+    Serial.printf("R: %uG:%u G:%u C:%u\n");
 }
 
 bool LS::isBlackTile() {
@@ -46,8 +63,25 @@ bool LS::isSilverTile() {
     // for (int i = 0; i < LS_COUNT; ++i) {
         // Serial.printf("%d - %d = %d > %d (%d)\t", (int)LSinit[i], (int)LSnow[i], (int)LSinit[i]-(int)LSnow[i], (int)LSsilverdiff[i], ((int)LSinit[i] - (int)LSnow[i]) > (int)LSsilverdiff[i]);
     // }
-    // Serial.println();
+    // Serial.print/ln();
 
     if(count == LS_COUNT) {return true;}
     return false;
+}
+
+bool LS::isBlueTile() {
+    uint16_t r, g, b, c;
+    LSMux->setPort(COLOUR_MUX_PORT);
+    if(!colour.colorDataReady()) {return false;}
+    
+    colour.getColorData(&r, &g, &b, &c);
+    return (abs(r - BLUE_R) < 2.0 && abs(g - BLUE_G) < 2.0 && abs(b - BLUE_B) < 2.0 && abs(c - BLUE_C) < 2.0);
+}
+
+tile_colour_t LS::getTileType() {
+    // Might need to put blue first depending on how dark the blue is or if the black thereshold is blue as well
+    if(isBlackTile()) {return tile_colour_t::BLACK;}
+    if (isSilverTile()) {return tile_colour_t::SILVER;}
+    if (isBlueTile()) {return tile_colour_t::BLUE;}
+    return tile_colour_t::OTHER;    
 }

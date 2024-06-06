@@ -5,11 +5,21 @@
 #include <Wire.h>
 #include <imumaths.h>
 
+// ---------- Types ---------- //
+
 typedef enum {
-    NONE = 0,
+    NO_VICTIM = 0,
     LEFT = 1,
     RIGHT = 2
 } victim_type_t;
+
+
+typedef enum {
+    OTHER = 0,
+    BLACK = 1,
+    SILVER = 2,
+    BLUE = 3
+} tile_colour_t;
 
 // ---------- Motors ---------- //
 
@@ -53,7 +63,8 @@ typedef enum {
 
 // --------- LS ---------- //
 
-#define LED_LSB 4
+#define LS_CONTROL 4
+#define COLOUR_MUX_PORT 3
 
 #define LS_1 22
 #define LS_2 21
@@ -61,20 +72,67 @@ typedef enum {
 
 #define LS_COUNT 3
 
-// Also need the colour detection stuff
+#define LS_BOARD_BRIGHTNESS 67 // PWM
+
+#define BLUE_R 10
+#define BLUE_G 10
+#define BLUE_B 10
+#define BLUE_C 10
 
 // ---------- TEMP ---------- //
 
-// Dummy
-#define TEMP_L 1
+#define TEMP_L 5
 #define TEMP_R 2
-
-#define TEMP_MUX_ENABLE 10 // dummy
-
-#define TEMP_MUX Wire1
-#define MUX_ADDR 0x70
+#define TEMP_ADDR 0x5A
 
 #define TEMP_THRESHOLD 4.0f
 
+// ---------- MUX ---------- //
+
+#define MUX_PORT Wire1
+#define MUX_ADDR 0x70
+
+// ---------- I2C Scanner ---------- //
+
+inline void I2CScanner(TwoWire& the_wire)
+{
+    byte error, address;
+    int nDevices;
+
+    Serial.println("Scanning...");
+
+    nDevices = 0;
+    for(address = 1; address < 127; address++ )
+    {
+        the_wire.beginTransmission(address);
+        error = the_wire.endTransmission();
+
+        the_wire.beginTransmission(address+1);
+
+    if (error == 0) // Special flag for SAMD Series
+    {
+        Serial.print("I2C device found at address 0x");
+        if (address<16)
+            Serial.print("0");
+        Serial.print(address,HEX);
+        Serial.println("!");
+
+        nDevices++;
+    }
+    else if (error==4) 
+    {
+        Serial.print("Unknown error at address 0x");
+        if (address<16) 
+            Serial.print("0");
+        Serial.println(address,HEX);
+    }
+    }
+    if (nDevices == 0)
+        Serial.println("No I2C devices found\n");
+    else
+        Serial.println("done\n");
+
+    delay(5000);           // wait 5 seconds for next scan
+}
 #endif // DEFINE_H_
 

@@ -3,13 +3,13 @@
 
 #include <Arduino.h>
 #include <Define.h>
-#include <SparkFun_I2C_Mux_Arduino_Library.h>
 #include <Adafruit_MLX90614.h>
+#include <SparkFun_I2C_Mux_Arduino_Library.h>
 
 class TEMP
 {
 public:
-    TEMP(){};
+    TEMP(QWIICMUX* mux) : TempMux(mux) {}
     
     void init();
     void read();
@@ -17,7 +17,7 @@ public:
     victim_type_t isheatVictim();
 
 private:
-    QWIICMUX TempMux;
+    QWIICMUX* TempMux;
     Adafruit_MLX90614 TMPS;
 
     float initTemp;

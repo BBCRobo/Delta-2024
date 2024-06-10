@@ -5,6 +5,8 @@
 #include <Wire.h>
 #include <imumaths.h>
 
+#define START_PIN 10
+
 // ---------- Types ---------- //
 
 typedef enum {
@@ -72,7 +74,7 @@ typedef enum {
 
 #define LS_COUNT 3
 
-#define LS_BOARD_BRIGHTNESS 67 // PWM
+#define LS_BOARD_BRIGHTNESS 255 // PWM
 
 #define BLUE_R 10
 #define BLUE_G 10

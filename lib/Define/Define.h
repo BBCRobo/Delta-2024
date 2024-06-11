@@ -94,6 +94,11 @@ typedef enum {
 #define MUX_PORT Wire1
 #define MUX_ADDR 0x70
 
+// ---------- BUMPER ---------- //
+
+#define BUMPERL 5
+#define BUMPERR 6
+
 // ---------- I2C Scanner ---------- //
 
 inline void I2CScanner(TwoWire& the_wire)

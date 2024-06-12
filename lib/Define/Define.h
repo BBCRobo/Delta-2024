@@ -30,7 +30,8 @@ typedef enum {
 
 #define DXL_BAUD 57600
 #define DXL_PROT_VER 2.0
-#define DXL_MAX_VELOCITY 450 // (106 / 0.229) - 20 for buffer
+#define DXL_MAX_VELOCITY 1023
+#define MAX_SPEED 255
 
 // Max RPM of XC430-W150-T is 106 @ 12V no load
 // 0.229rpm for each UNIT_RAW (int16_t)
@@ -62,6 +63,7 @@ typedef enum {
 #define LATTE_BAUD 115200
 
 #define TRANSMIT_FIRST_BYTE 0xFF
+#define LATTE_MSG_SIZE 3
 
 // --------- LS ---------- //
 

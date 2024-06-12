@@ -16,8 +16,8 @@ public:
     Motor(uint8_t id, bool isReversed, Dynamixel2Arduino* motor);
 
     void init();
-    void setTargetVelocityRaw(int16_t velocity);
-    int16_t getCurrentVelocityRaw();
+    void setTargetVelocity(uint8_t velocity);
+    uint8_t getCurrentVelocity();
 
 private:
     uint8_t id;

@@ -18,18 +18,18 @@ void MotorArray::init() {
     backRight.init();
 }
 
-void MotorArray::setTargetVelocityRaw(int16_t left, int16_t right) {
+void MotorArray::setTargetVelocity(uint8_t left, uint8_t right) {
     // Ensure left and right don't exceed max/min vel.
-    left = (left > DXL_MAX_VELOCITY ? DXL_MAX_VELOCITY : (left < -DXL_MAX_VELOCITY ? -DXL_MAX_VELOCITY : left));
-    right = (right > DXL_MAX_VELOCITY ? DXL_MAX_VELOCITY : (right < -DXL_MAX_VELOCITY ? -DXL_MAX_VELOCITY : right));
-    frontLeft.setTargetVelocityRaw(left);
-    frontRight.setTargetVelocityRaw(right);
-    backLeft.setTargetVelocityRaw(left);
-    backRight.setTargetVelocityRaw(right);
+    left = (left > MAX_SPEED ? MAX_SPEED : (left < -MAX_SPEED ? -MAX_SPEED : left));
+    right = (right > MAX_SPEED ? MAX_SPEED : (right < -MAX_SPEED ? -MAX_SPEED : right));
+    frontLeft.setTargetVelocity(left);
+    frontRight.setTargetVelocity(right);
+    backLeft.setTargetVelocity(left);
+    backRight.setTargetVelocity(right);
 }
 
-std::array<float, 2> MotorArray::getCurrentVelocityRaw() {
-    float left_vel = static_cast<float>((frontLeft.getCurrentVelocityRaw() + backLeft.getCurrentVelocityRaw())/2);
-    float right_vel = static_cast<float>((frontRight.getCurrentVelocityRaw() + backRight.getCurrentVelocityRaw())/2);
+std::array<float, 2> MotorArray::getCurrentVelocity() {
+    float left_vel = static_cast<float>((frontLeft.getCurrentVelocity() + backLeft.getCurrentVelocity())/2);
+    float right_vel = static_cast<float>((frontRight.getCurrentVelocity() + backRight.getCurrentVelocity())/2);
     return {left_vel, right_vel};
 }

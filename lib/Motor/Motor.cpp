@@ -16,12 +16,13 @@ void Motor::init() {
     currMode = OP_VELOCITY;
 }
 
-void Motor::setTargetVelocityRaw(int16_t velocity) {
-    motor->setGoalVelocity(id, velocity * isReversed, UNIT_RAW);
+void Motor::setTargetVelocity(uint8_t velocity) {
+    float percentSpeed = static_cast<float>(constrain(velocity/MAX_SPEED * 100, -100, 100));
+    motor->setGoalVelocity(id, percentSpeed * isReversed, UNIT_PERCENT);
 }
 
-int16_t Motor::getCurrentVelocityRaw() {
-    int16_t currVel = motor->getPresentVelocity(id, UNIT_RAW) * isReversed;
+uint8_t Motor::getCurrentVelocity() {
+    uint8_t currVel = motor->getPresentVelocity(id, UNIT_PERCENT) * isReversed;
     //Serial.printf("id:%d Val: %d\n", id, currVel);
     return currVel;
 }

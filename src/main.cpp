@@ -58,5 +58,16 @@ void loop() {
     // temp.read();
     // ls.readColour();
     // ls.readLight();
-    Serial.printf("Raw:%u Byte:%02x\n", combined_byte, combined_byte);
+    // Serial.printf("Raw:%u Byte:%02x\n", combined_byte, combined_byte);
+    
+    if(LATTE_SERIAL.available() >= LATTE_MSG_SIZE) {
+        uint8_t temp = LATTE_SERIAL.peek();
+        if(temp == TRANSMIT_FIRST_BYTE) {
+            LATTE_SERIAL.read();
+            uint8_t left_speed = LATTE_SERIAL.read();
+            uint8_t right_speed = LATTE_SERIAL.read();
+            Serial.printf("Motors: L:%d R:%d\n", left_speed, right_speed);
+            // legs.setTargetVelocity(left_speed, right_speed);
+        }
+    }
 }

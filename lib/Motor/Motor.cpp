@@ -16,8 +16,9 @@ void Motor::init() {
     currMode = OP_VELOCITY;
 }
 
-void Motor::setTargetVelocity(uint8_t velocity) {
-    float percentSpeed = static_cast<float>(constrain(velocity/MAX_SPEED * 100, -100, 100));
+void Motor::setTargetVelocity(int velocity) {
+    float percentSpeed = constrain(velocity/static_cast<float>(MAX_SPEED) * 100.0f, -100.0f, 100.0f);
+    // Serial.println(percentSpeed);
     motor->setGoalVelocity(id, percentSpeed * isReversed, UNIT_PERCENT);
 }
 

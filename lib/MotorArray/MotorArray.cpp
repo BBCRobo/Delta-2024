@@ -18,10 +18,15 @@ void MotorArray::init() {
     backRight.init();
 }
 
-void MotorArray::setTargetVelocity(uint8_t left, uint8_t right) {
-    // Ensure left and right don't exceed max/min vel.
+void MotorArray::setTargetVelocity(uint8_t status, uint8_t left, uint8_t right) {
     left = (left > MAX_SPEED ? MAX_SPEED : (left < -MAX_SPEED ? -MAX_SPEED : left));
     right = (right > MAX_SPEED ? MAX_SPEED : (right < -MAX_SPEED ? -MAX_SPEED : right));
+
+    left *= ((status >> 1) & 0x01) == 1 ? -1 : 1;
+    right *= (status & 0x01) == 1 ? -1 : 1;
+
+    Serial.printf("L:%d R:%d\n", left, right);
+
     frontLeft.setTargetVelocity(left);
     frontRight.setTargetVelocity(right);
     backLeft.setTargetVelocity(left);

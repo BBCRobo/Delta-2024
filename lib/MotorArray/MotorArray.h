@@ -11,7 +11,7 @@ public:
     MotorArray(HardwareSerial& port, int dir_pin);
 
     void init();
-    void setTargetVelocity(uint8_t left, uint8_t right);
+    void setTargetVelocity(uint8_t status, uint8_t left, uint8_t right);
     std::array<float, 2> getCurrentVelocity();
 
 private:

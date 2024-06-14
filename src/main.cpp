@@ -25,6 +25,7 @@ void setup() {
     }
 
     legs.init();
+    legs.setTargetVelocity(0, 0, 0);
     compass.init();
     temp.init();
     ls.init();
@@ -60,14 +61,35 @@ void loop() {
     // ls.readLight();
     // Serial.printf("Raw:%u Byte:%02x\n", combined_byte, combined_byte);
     
-    if(LATTE_SERIAL.available() >= LATTE_MSG_SIZE) {
+    if(LATTE_SERIAL.available() > 0) {
         uint8_t temp = LATTE_SERIAL.peek();
+        // Serial.printf("Temp:%d", temp);
         if(temp == TRANSMIT_FIRST_BYTE) {
+            if(LATTE_SERIAL.available() >= LATTE_MSG_SIZE) {
+                uint8_t header = LATTE_SERIAL.read();
+                uint8_t status = LATTE_SERIAL.read();
+                uint8_t left_speed = LATTE_SERIAL.read();
+                uint8_t right_speed = LATTE_SERIAL.read();
+                Serial.printf("Motors: Status:%d L:%d R:%d\n", status, left_speed, right_speed);
+                legs.setTargetVelocity(status, left_speed, right_speed);
+            }
+        } else {
             LATTE_SERIAL.read();
-            uint8_t left_speed = LATTE_SERIAL.read();
-            uint8_t right_speed = LATTE_SERIAL.read();
-            Serial.printf("Motors: L:%d R:%d\n", left_speed, right_speed);
-            // legs.setTargetVelocity(left_speed, right_speed);
         }
     }
+
+    // if(LATTE_SERIAL.available() >= LATTE_MSG_SIZE) {
+    //     uint8_t temp = LATTE_SERIAL.peek();
+    //     // Serial.printf("Temp:%d", temp);
+    //     if(temp == TRANSMIT_FIRST_BYTE) {
+    //         LATTE_SERIAL.read();
+    //         uint8_t status = LATTE_SERIAL.read();
+    //         uint8_t left_speed = LATTE_SERIAL.read();
+    //         uint8_t right_speed = LATTE_SERIAL.read();
+    //         Serial.printf("Motors: Status:%d L:%d R:%d\n", status, left_speed, right_speed);
+    //         legs.setTargetVelocity(status, left_speed, right_speed);
+    //     } else {
+    //         LATTE_SERIAL.read();
+    //     }
+    // } 
 }

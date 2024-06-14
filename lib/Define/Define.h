@@ -63,7 +63,7 @@ typedef enum {
 #define LATTE_BAUD 115200
 
 #define TRANSMIT_FIRST_BYTE 0xFF
-#define LATTE_MSG_SIZE 3
+#define LATTE_MSG_SIZE 4
 
 // --------- LS ---------- //
 

@@ -60,10 +60,11 @@ typedef enum {
 // ---------- LattePanda ---------- //
 
 #define LATTE_SERIAL Serial1
-#define LATTE_BAUD 115200
+#define LATTE_BAUD 9600
 
 #define TRANSMIT_FIRST_BYTE 0xFF
-#define LATTE_MSG_SIZE 4
+#define TRANSMIT_SECOND_BYTE 0xFE
+#define LATTE_MSG_SIZE 5
 
 // --------- LS ---------- //
 

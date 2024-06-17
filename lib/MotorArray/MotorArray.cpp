@@ -19,18 +19,18 @@ void MotorArray::init() {
 }
 
 void MotorArray::setTargetVelocity(uint8_t status, uint8_t left, uint8_t right) {
-    left = (left > MAX_SPEED ? MAX_SPEED : (left < -MAX_SPEED ? -MAX_SPEED : left));
-    right = (right > MAX_SPEED ? MAX_SPEED : (right < -MAX_SPEED ? -MAX_SPEED : right));
+    int left_vel = (left > MAX_SPEED ? MAX_SPEED : left);
+    int right_vel = (right > MAX_SPEED ? MAX_SPEED : right);
 
-    left *= ((status >> 1) & 0x01) == 1 ? -1 : 1;
-    right *= (status & 0x01) == 1 ? -1 : 1;
+    left_vel *= ((status >> 1) & 0x01) == 1 ? -1 : 1;
+    right_vel *= (status & 0x01) == 1 ? -1 : 1;
 
-    Serial.printf("L:%d R:%d\n", left, right);
+    // Serial.printf("L:%d R:%d\n", left_vel, right_vel);
 
-    frontLeft.setTargetVelocity(left);
-    frontRight.setTargetVelocity(right);
-    backLeft.setTargetVelocity(left);
-    backRight.setTargetVelocity(right);
+    frontLeft.setTargetVelocity(left_vel);
+    frontRight.setTargetVelocity(right_vel);
+    backLeft.setTargetVelocity(left_vel);
+    backRight.setTargetVelocity(right_vel);
 }
 
 std::array<float, 2> MotorArray::getCurrentVelocity() {

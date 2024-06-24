@@ -28,11 +28,11 @@ std::vector<byte> readData() {
     std::vector<byte> message = {TRANSMIT_FIRST_BYTE, TRANSMIT_FIRST_BYTE};
     
     std::vector<byte> compass_data = compass.convertOrient2Bytes();
-    victim_type_t victim = victim_type_t::RIGHT; // temp.isheatVictim();
-    tile_colour_t tile =  tile_colour_t::BLUE; // ls.getTileType();
+    victim_type_t victim = victim_type_t::NO_VICTIM; // temp.isheatVictim();
+    tile_colour_t tile =  tile_colour_t::OTHER; // ls.getTileType();
     bool bumper_left = 0; //digitalRead(BUMPERL);
-    bool bumper_right = 1; //digitalRead(BUMPERR);
-    bool switch_state = 1; // digitalRead(START_PIN);
+    bool bumper_right = 0; //digitalRead(BUMPERR);
+    bool switch_state = digitalRead(START_PIN);
     
     uint8_t combined_byte = ((static_cast<uint8_t>(victim) & 0x03) << 6) | ((static_cast<uint8_t>(tile) & 0x07) << 3) | (bumper_left << 2) | (bumper_right << 1) | switch_state;
     
@@ -44,6 +44,10 @@ std::vector<byte> readData() {
 
 void setup() {
     Serial.begin(9600);
+    pinMode(START_PIN, INPUT);
+    pinMode(BUMPERL, INPUT);
+    pinMode(BUMPERR, INPUT);
+
     LATTE_SERIAL.begin(LATTE_BAUD);
 
     MUX_PORT.begin();
@@ -51,12 +55,10 @@ void setup() {
         Serial.println("Mux did not begin");
     }
 
-    delay(3000);
-
     legs.init();
     legs.setTargetVelocity(0, 0, 0);
     compass.init();
-    temp.init();
+    // temp.init();
     ls.init();
 
     global_message = readData();
@@ -90,6 +92,7 @@ void loop() {
     //     Serial.println(temp);
     // }
     // Serial.println("p");
+    Serial.println(digitalRead(START_PIN));
 
     while(LATTE_SERIAL.available() >= 5) {
         uint8_t byte1 = LATTE_SERIAL.read();
@@ -107,5 +110,5 @@ void loop() {
         }
     }
     
-    legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]); // -this function is causing the issue - randomly takes 200ms to run
+    legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]); 
 }

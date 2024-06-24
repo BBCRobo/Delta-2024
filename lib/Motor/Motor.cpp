@@ -17,7 +17,7 @@ void Motor::init() {
 }
 
 void Motor::setTargetVelocity(int velocity) {
-    int percentSpeed = constrain(velocity/static_cast<float>(MAX_SPEED)) * DXL_MAX_VELOCITY, -DXL_MAX_VELOCITY, DXL_MAX_VELOCITY);
+    int percentSpeed = constrain(velocity/static_cast<float>(MAX_SPEED) * DXL_MAX_VELOCITY, -DXL_MAX_VELOCITY, DXL_MAX_VELOCITY);
     // Serial.println(percentSpeed);
     motor->setGoalVelocity(id, percentSpeed * isReversed, UNIT_RAW);
 }

@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <imumaths.h>
 
-#define START_PIN 10
+#define START_PIN 12
 
 // ---------- Types ---------- //
 

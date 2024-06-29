@@ -21,7 +21,7 @@ uint8_t buffer[4] = {0};
 IntervalTimer latte_timer;
 
 volatile std::vector<byte> global_message;
-volatile bool dropDropping = false;
+bool dropDropping = false;
 
 void write_data() {
     LATTE_SERIAL.write(global_message.data(), global_message.size());
@@ -37,40 +37,37 @@ std::vector<byte> readData() {
     bool bumper_left = 0; //digitalRead(BUMPERL);
     bool bumper_right = 0; //digitalRead(BUMPERR);
     bool switch_state = digitalRead(START_PIN);
-    uint8_t dropStat = static_cast<uint8_t>(true);
-    
-    uint8_t combined_byte = ((static_cast<uint8_t>(victim) & 0x03) << 6) | ((static_cast<uint8_t>(tile) & 0x07) << 3) | (bumper_left << 2) | (bumper_right << 1) | switch_state;
-    
+    uint8_t combined_byte = ((static_cast<uint8_t>(victim) & 0x03) << 6) | ((static_cast<uint8_t>(tile) & 0x03) << 4) | 
+                            ((static_cast<uint8_t>(dropDropping) & 0x01) << 3) | (bumper_left << 2) | (bumper_right << 1) | switch_state;
+
     // Might also add wheel velocities too
     message.insert(message.end(), compass_data.begin(), compass_data.end());
-    message.insert(message.end(), combined_byte, dropStat);
+    message.push_back(combined_byte);
     return message;
 }
 
-// void dropVictims(uint8_t data) {
-//     if((data >> 7) & 0x01) {
-//         // Left
-//         for(int i = 0; i < static_cast<uint8_t>((data >> 4) & 0x07); i++) {
-//             // dropper.write(140);
-//             delay(1000);
-//             // dropper.write(90);
-//             delay(1000);
-//         }
-//     }
+void dropVictims(uint8_t data) {
+    if((data >> 7) & 0x01) {
+        // Left
+        for(int i = 0; i < static_cast<uint8_t>((data >> 4) & 0x07); i++) {
+            // dropper.write(140);
+            delay(1000);
+            // dropper.write(90);
+            delay(1000);
+        }
+    }
     
-//     if ((data >> 3) & 0x01) {
-//         // Right
-//         for(int i = 0; i < static_cast<uint8_t>((data) & 0x07); i++) {
-//             // dropper.write(40);
-//             delay(1000);
-//             // dropper.write(90);
-//             delay(1000);
-//         }
-//     }
-//     noInterrupts();
-//     dropDropping = false;
-//     interrupts();
-// }
+    if ((data >> 3) & 0x01) {
+        // Right
+        for(int i = 0; i < static_cast<uint8_t>((data) & 0x07); i++) {
+            // dropper.write(40);
+            delay(1000);
+            // dropper.write(90);
+            delay(1000);
+        }
+    }
+    dropDropping = false;
+}
 
 void setup() {
     Serial.begin(9600);
@@ -116,7 +113,7 @@ void loop() {
     // Serial.println();
 
     // ---------- Read Raw Data ---------- //
-    compass.printOrient();
+    // compass.printOrient();
     // temp.read();
     // ls.readColour();
     // ls.readLight();
@@ -126,28 +123,25 @@ void loop() {
         uint8_t byte2 = LATTE_SERIAL.peek();
         if(byte1 == TRANSMIT_FIRST_BYTE && byte2 == TRANSMIT_SECOND_BYTE) {
             LATTE_SERIAL.read();
-            // Serial.printf("1:%d 2:%d ", byte1, byte2);
+            Serial.printf("1:%d 2:%d ", byte1, byte2);
             for(uint8_t i = 0; i < 4; i++) {
                 buffer[i] = LATTE_SERIAL.read();
-                Serial.print(buffer[i]); Serial.print(" ");
+                // Serial.print(buffer[i]); Serial.print(" ");
             }
-            Serial.println(millis() - lastTime);
-            lastTime = millis();
+            // Serial.println(millis() - lastTime);
+            // lastTime = millis();
             // Serial.println();
         }
-    }    
+    }
     
-    // if(buffer[3] != 0) {
+    if(buffer[3] != 0) {
+        noInterrupts();
+        dropDropping = true;
+        interrupts();
 
-    //     noInterrupts();
-    //     dropDropping = true;
-    //     interrupts();
-
-    //     legs.setTargetVelocity(0, 0, 0);
-    //     dropVictims(buffer[3]);
-    // } else {
-        
-    // }
-    // legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]);
-
+        legs.setTargetVelocity(0, 0, 0);
+        dropVictims(buffer[3]);
+    } else {
+        legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]);
+    }
 }

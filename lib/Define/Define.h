@@ -7,6 +7,12 @@
 
 #define START_PIN 12
 
+// ---------- SERVO ---------- //
+
+#define SERVO_PIN 2
+#define LEFT_MAX 48
+#define RIGHT_MAX 132
+
 // ---------- Types ---------- //
 
 typedef enum {
@@ -79,10 +85,17 @@ typedef enum {
 
 #define LS_BOARD_BRIGHTNESS 255 // PWM
 
-#define BLUE_R 10
-#define BLUE_G 10
-#define BLUE_B 10
-#define BLUE_C 10
+
+// all the others are less than
+#define BLUE_R 5
+#define BLUE_G 5
+#define BLUE_B 7 // greater than
+#define BLUE_C 20 // greater than
+
+#define BLACK_R 2
+#define BLACK_G 2
+#define BLACK_B 2
+#define BLACK_C 5
 
 // ---------- TEMP ---------- //
 

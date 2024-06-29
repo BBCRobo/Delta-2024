@@ -18,6 +18,8 @@ public:
     tile_colour_t getTileType();
 
 private:
+    void updateColourReadings();
+
     bool isBlackTile();
     bool isSilverTile();
     bool isBlueTile();
@@ -30,6 +32,7 @@ private:
     double LSinit[LS_COUNT] = {910, 920, 910};
     double LSdiff[LS_COUNT] = {500, 500, 500};
     double LSsilverdiff[LS_COUNT] = {200, 200, 200};
+    uint16_t colourReadings[4] = {UINT16_MAX};
 };
 
 #endif

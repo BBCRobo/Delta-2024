@@ -83,19 +83,19 @@ typedef enum {
 
 #define LS_COUNT 3
 
-#define LS_BOARD_BRIGHTNESS 255 // PWM
+#define LS_BOARD_BRIGHTNESS 200 // PWM
 
 
 // all the others are less than
 #define BLUE_R 5
-#define BLUE_G 5
-#define BLUE_B 7 // greater than
-#define BLUE_C 20 // greater than
+#define BLUE_G 12
+#define BLUE_B 20 // greater than
+#define BLUE_C 30 // greater than
 
-#define BLACK_R 2
-#define BLACK_G 2
-#define BLACK_B 2
-#define BLACK_C 5
+#define BLACK_R 5
+#define BLACK_G 5
+#define BLACK_B 5
+#define BLACK_C 10
 
 // ---------- TEMP ---------- //
 

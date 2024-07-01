@@ -86,7 +86,7 @@ bool LS::isSilverTile() {
 }
 
 bool LS::isBlueTile() {
-    return (colourReadings[0] < BLUE_R && colourReadings[1] < BLUE_G && colourReadings[2] >  BLUE_B && colourReadings[3] < BLUE_C);
+    return (colourReadings[0] < BLUE_R && colourReadings[1] < BLUE_G && colourReadings[2] >  BLUE_B && colourReadings[3] > BLUE_C);
 }
 
 tile_colour_t LS::getTileType() {

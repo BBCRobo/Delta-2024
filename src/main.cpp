@@ -40,9 +40,9 @@ std::vector<byte> readData() {
     // NOTE: LSB (not colour sensosr) is causing the code to halt and pause - will debug later
     std::vector<byte> compass_data = compass.convertOrient2Bytes();
     victim_type_t victim = victim_type_t::NO_VICTIM; // temp.isheatVictim();
-    tile_colour_t tile = tile_colour_t::OTHER; // ls.getTileType();
-    bool bumper_left = 0; //digitalRead(BUMPERL);
-    bool bumper_right = 0; //digitalRead(BUMPERR);
+    tile_colour_t tile = ls.getTileType();
+    bool bumper_left = digitalRead(BUMPERL);
+    bool bumper_right = digitalRead(BUMPERR);
     bool switch_state = digitalRead(START_PIN);
     uint8_t combined_byte = ((static_cast<uint8_t>(victim) & 0x03) << 6) | ((static_cast<uint8_t>(tile) & 0x03) << 4) | 
                             (dropDropping << 3) | (bumper_left << 2) | (bumper_right << 1) | switch_state;

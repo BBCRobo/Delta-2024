@@ -72,32 +72,50 @@ void listenData() {
 }
 
 void dropVictims(uint8_t data) {
-    Serial.println(data);
+    uint8_t drop_cuml = 0;
+
     if((data >> 7) & 0x01) {
         uint8_t drop_multi = static_cast<uint8_t>((data >> 4) & 0x07);
         Serial.printf("Left:%u", drop_multi);
         for(uint8_t i = 0; i < drop_multi; i++) {
-            // dropper.write(140);
+            digitalWrite(VICTIM_LED, HIGH);
+            dropper.write(LEFT_MAX);
             delay(500);
-            // dropper.write(90);
+            digitalWrite(VICTIM_LED, LOW);
+            dropper.write(SERVO_MIDDLE);
             delay(500);
         }
+        drop_cuml += drop_multi;
     }
     
     if ((data >> 3) & 0x01) {
         uint8_t drop_multi = static_cast<uint8_t>((data) & 0x07);
         for(uint8_t i = 0; i < drop_multi; i++) {
-            // dropper.write(40);
+            digitalWrite(VICTIM_LED, HIGH);
+            dropper.write(RIGHT_MAX);
             delay(500);
-            // dropper.write(90);
+            digitalWrite(VICTIM_LED, LOW);
+            dropper.write(SERVO_MIDDLE);
             delay(500);
         }
+        drop_cuml += drop_multi;
     }
-    delay(1000); // Minimum delay when we write the light for not pellet victims
-    Serial.println("Writing false");
+
+    for(uint8_t blinks_left = drop_cuml; blinks_left < 5; blinks_left++) {
+        digitalWrite(VICTIM_LED, HIGH);
+        delay(500);
+        digitalWrite(VICTIM_LED, LOW);
+        delay(500);
+    }
+
     dropDropping = false;
 
     while(buffer[3] != 0) {
+        std::vector<byte> temp_message = readData();
+        noInterrupts();
+        global_message = temp_message;
+        interrupts();
+
         Serial.println("waiting for sending false again");
         listenData();
     }
@@ -108,6 +126,9 @@ void setup() {
     pinMode(START_PIN, INPUT);
     pinMode(BUMPERL, INPUT);
     pinMode(BUMPERR, INPUT);
+
+    pinMode(VICTIM_LED, OUTPUT);
+    digitalWrite(VICTIM_LED, LOW);
 
     LATTE_SERIAL.begin(LATTE_BAUD);
 
@@ -122,10 +143,8 @@ void setup() {
     // temp.init();
     ls.init();
 
-    // TODO: Change dropper stuff
-    // dropper.attach(SERVO_PIN);
-    // delay(500);
-    // dropper.write(90);
+    dropper.attach(SERVO_PIN);
+    dropper.write(SERVO_MIDDLE);
 
     global_message = readData();
 

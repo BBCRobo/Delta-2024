@@ -7,10 +7,16 @@
 
 #define START_PIN 12
 
+// ---------- Victims ---------- //
+
+#define VICTIM_LED 13
+
 // ---------- SERVO ---------- //
 
 #define SERVO_PIN 2
-#define LEFT_MAX 48
+
+#define SERVO_MIDDLE 90
+#define LEFT_MAX 50
 #define RIGHT_MAX 132
 
 // ---------- Types ---------- //

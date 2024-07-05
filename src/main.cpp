@@ -22,6 +22,7 @@ IntervalTimer latte_timer;
 
 volatile std::vector<byte> global_message;
 bool dropDropping = false;
+unsigned long lastTime;
 
 void write_data() {
     LATTE_SERIAL.write(global_message.data(), global_message.size());
@@ -46,6 +47,8 @@ std::vector<byte> readData() {
     bool switch_state = digitalRead(START_PIN);
     uint8_t combined_byte = ((static_cast<uint8_t>(victim) & 0x03) << 6) | ((static_cast<uint8_t>(tile) & 0x03) << 4) | 
                             (dropDropping << 3) | (bumper_left << 2) | (bumper_right << 1) | switch_state;
+    
+    // uint16_t encoderDist = legs.getEncoderDist(lastTime);
 
     // Might also add wheel velocities too
     message.insert(message.end(), compass_data.begin(), compass_data.end());
@@ -146,18 +149,19 @@ void setup() {
     dropper.attach(SERVO_PIN);
     dropper.write(SERVO_MIDDLE);
 
+    lastTime = millis();
     global_message = readData();
 
-    latte_timer.begin(write_data, 10000); // 10ms
+    // latte_timer.begin(write_data, 10000); // 10ms
 }
-
-unsigned long lastTime = millis();
 
 void loop() {
     std::vector<byte> temp_message = readData();
     noInterrupts();
     global_message = temp_message;
     interrupts();
+
+    listenData();
 
     // ---------- Read Data Message ---------- //
     // printGlobalMsg();
@@ -167,23 +171,25 @@ void loop() {
     // temp.read();
     // ls.readColour();
     // ls.readLight();
+    Serial.printf("Encoder Dist:%u", legs.getEncoderDist(compass.getOrientVector().x(), lastTime));
 
-    listenData();
     
-    if(buffer[3] != 0) {
-        dropDropping = true;
-        Serial.println("got this");
-        legs.setTargetVelocity(0, 0, 0);
+    // if(buffer[3] != 0) {
+    //     dropDropping = true;
+    //     Serial.println("got this");
+    //     legs.setTargetVelocity(0, 0, 0);
 
-        std::vector<byte> drop_msg = readData();
-        noInterrupts();
-        global_message = drop_msg;
-        interrupts();
+    //     std::vector<byte> drop_msg = readData();
+    //     noInterrupts();
+    //     global_message = drop_msg;
+    //     interrupts();
 
-        printGlobalMsg();
+    //     printGlobalMsg();
 
-        dropVictims(buffer[3]);
-    } else {
-        legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]);
-    }
+    //     dropVictims(buffer[3]);
+    // } else {
+    //     legs.setTargetVelocity(buffer[0], buffer[1], buffer[2]);
+    // }
+
+    legs.setTargetVelocity(0, 80, 80);
 }

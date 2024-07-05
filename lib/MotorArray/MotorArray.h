@@ -12,9 +12,13 @@ public:
 
     void init();
     void setTargetVelocity(uint8_t status, uint8_t left, uint8_t right);
-    std::array<float, 2> getCurrentVelocity();
+    uint16_t getEncoderDist(float currPitch, unsigned long &lastTime);
 
 private:
+    std::array<float, 2> getCurrentVelocity();
+
+    double tile_distx = ENCODER_OFFSET;
+
     Motor backLeft;
     Motor backRight;
     Motor frontLeft;

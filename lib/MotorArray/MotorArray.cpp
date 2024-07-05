@@ -38,3 +38,14 @@ std::array<float, 2> MotorArray::getCurrentVelocity() {
     float right_vel = static_cast<float>((frontRight.getCurrentVelocity() + backRight.getCurrentVelocity())/2);
     return {left_vel, right_vel};
 }
+
+uint16_t MotorArray::getEncoderDist(float currPitch, unsigned long &lastTime) {
+    std::array<float, 2> currVel = getCurrentVelocity();
+    Serial.println(currVel[0]);
+    Serial.println(currVel[1]);
+    double vel = (WHEEL_DIAMETER_MM/2)*(currVel[0] + currVel[1])/2;
+    tile_distx += vel*cosf(0 * M_PI/180.0f)*static_cast<double>(millis() - lastTime)/1000;
+    Serial.println(tile_distx);
+    lastTime = millis();
+    return static_cast<uint16_t>(round((tile_distx)/10)); // MM to CM
+}

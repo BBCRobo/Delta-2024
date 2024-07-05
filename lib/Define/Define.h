@@ -61,6 +61,9 @@ typedef enum {
 #define FR_ID 4
 #define FR_REVERSED true
 
+#define WHEEL_DIAMETER_MM 70 // MM not considering squishing
+#define ENCODER_OFFSET 1000
+
 // ---------- IMU ---------- //
 
 #define BNO_DEFAULT 55

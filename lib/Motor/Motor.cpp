@@ -22,8 +22,8 @@ void Motor::setTargetVelocity(int velocity) {
     motor->setGoalVelocity(id, percentSpeed * isReversed, UNIT_RAW);
 }
 
-uint8_t Motor::getCurrentVelocity() {
-    uint8_t currVel = motor->getPresentVelocity(id, UNIT_PERCENT) * isReversed;
-    //Serial.printf("id:%d Val: %d\n", id, currVel);
+float Motor::getCurrentVelocity() {
+    float currVel = (motor->getPresentVelocity(id, UNIT_RPM)/60 * 2 * M_PI * isReversed);
+    Serial.printf("id:%d Val: %f\n", id, currVel);
     return currVel;
 }

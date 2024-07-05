@@ -17,7 +17,7 @@ public:
 
     void init();
     void setTargetVelocity(int velocity);
-    uint8_t getCurrentVelocity();
+    float getCurrentVelocity();
 
 private:
     uint8_t id;

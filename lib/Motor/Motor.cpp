@@ -24,6 +24,6 @@ void Motor::setTargetVelocity(int velocity) {
 
 float Motor::getCurrentVelocity() {
     float currVel = (motor->getPresentVelocity(id, UNIT_RPM)/60 * 2 * M_PI * isReversed);
-    Serial.printf("id:%d Val: %f\n", id, currVel);
+    //Serial.printf("id:%d Val: %f\n", id, currVel);
     return currVel;
 }

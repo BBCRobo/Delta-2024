@@ -10,14 +10,14 @@
 // ---------- Victims ---------- //
 
 #define VICTIM_LED 13
+#define LIGHT_BOARD 10
+#define LIGHT_BOARD_PWM 150
 
 // ---------- SERVO ---------- //
 
 #define SERVO_PIN 2
 
 #define SERVO_MIDDLE 90
-#define LEFT_MAX 50
-#define RIGHT_MAX 132
 
 // ---------- Types ---------- //
 
@@ -80,6 +80,7 @@ typedef enum {
 #define TRANSMIT_FIRST_BYTE 0xFF
 #define TRANSMIT_SECOND_BYTE 0xFE
 #define LATTE_MSG_SIZE 5
+#define SEND_MSG_SIZE 11
 
 // --------- LS ---------- //
 
@@ -92,14 +93,14 @@ typedef enum {
 
 #define LS_COUNT 3
 
-#define LS_BOARD_BRIGHTNESS 200 // PWM
+#define LS_BOARD_BRIGHTNESS 150 // PWM
 
 
 // all the others are less than
 #define BLUE_R 5
 #define BLUE_G 12
-#define BLUE_B 20 // greater than
-#define BLUE_C 30 // greater than
+#define BLUE_B 15 // greater than
+#define BLUE_C 25 // greater than
 
 #define BLACK_R 5
 #define BLACK_G 5
